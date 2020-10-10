@@ -2,3 +2,4 @@ node_modules
 .eslintrc.json
 DS_Store
 package-lock.json
+jsconfig.json
