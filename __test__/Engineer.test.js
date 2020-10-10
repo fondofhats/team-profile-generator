@@ -1,4 +1,4 @@
-const { TestScheduler } = require('jest');
+
 const Engineer = require('../lib/Engineer');
 
 test('creates an Engineer object', () =>{
@@ -16,6 +16,6 @@ test("gets Engineer's github username", () =>{
     expect(engineer.getGithub()).toEqual(expect.stringContaining(engineer.github.toString()));
 });
 test("gets Engineer's role", () => {
-    const engineer = new Engineer('Michael','7','me@you.com');
+    const engineer = new Engineer('Michael', '7', 'me@you.com','fondofhats');
     expect(engineer.getRole()).toEqual(expect.stringContaining(engineer.role.toString()));   
 });
