@@ -20,10 +20,26 @@ class App {
 
     async init(){
         let input = '';
+        do {
         const employee = this.createEmployee(await this.getEmployeeInfo());
+        this.saveEmployeeToDb(employee);
         console.table(employee);
+        input =
+            await inquirer
+                .prompt([
+                    {
+                        type: "confirm",
+                        name: "exit",
+                        message: "Would you like to enter another employee?",
+                        default: false
+                    }
+                ]);
 
+        } while(input.exit);
 
+/*         const teamRoster = this.createTeamRoster();
+        console.table(teamRoster);
+ */
     }
 
     /* Employee Info */
@@ -149,11 +165,31 @@ class App {
         return employee;
     }
 
+    /* Save Employee to APP array paramaters */
+    saveEmployeeToDb(employee) {
+        switch (employee.getRole().toLowerCase()) {
+            case 'manager':
+                this.db.manager = employee;
+                break;
+            case 'engineer':
+                this.db.engineers.push(employee);
+                break;
+            case 'intern':
+                this.db.interns.push(employee);
+                break;
+            default:
+                break;
+        }
+    }
+
+
 }
 
 module.exports= App;
 
 const app = new App();
 app.init();
-
+/* console.log(app.db.engineers.length);
+console.log(app.db.interns.length);
+ */
 
