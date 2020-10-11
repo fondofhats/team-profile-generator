@@ -271,7 +271,3 @@ module.exports= App;
 
 const app = new App();
 app.init();
-/* console.log(app.db.engineers.length);
-console.log(app.db.interns.length);
- */
-
