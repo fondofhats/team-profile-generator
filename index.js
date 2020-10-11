@@ -37,9 +37,9 @@ class App {
 
         } while(input.exit);
 
-/*         const teamRoster = this.createTeamRoster();
+        const teamRoster = this.createTeamRoster();
         console.table(teamRoster);
- */
+
     }
 
     /* Employee Info */
@@ -182,6 +182,42 @@ class App {
         }
     }
 
+    createTeamRoster() {
+
+        let managerProfile = '';
+        let engineers = '';
+        let interns = '';
+
+        if (this.db.manager) {
+            managerProfile = new ManagerProfile(this.db.manager);
+            managerProfile = managerProfile.createProfile();
+        }
+
+        if (this.db.engineers) {
+            for (const engineer of this.db.engineers) {
+                let engineerProfile = new EngineerProfile(engineer);
+                engineerProfile = engineerProfile.createProfile();
+
+                engineers += engineerProfile;
+            }
+        }
+
+        if (this.db.interns) {
+            for (const intern of this.db.interns) {
+                let internProfile = new InternProfile(intern);
+                internProfile = internProfile.createProfile();
+
+                engineers += internProfile;
+            }
+        }
+
+        const team = managerProfile + engineers + interns;
+
+        let teamRoster = new TeamRoster(team);
+        teamRoster = teamRoster.createTeamRoster();
+
+        return teamRoster;
+    }
 
 }
 
