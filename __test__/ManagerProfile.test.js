@@ -12,6 +12,4 @@ test("creates a ManagerProfile object", () => {
         officeNumber:'1234567891',
         html:expect.any(String)
     });
-
-
 });
