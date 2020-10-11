@@ -60,7 +60,7 @@ node index.js
 
 ### Demonstration
 
-<a href="https://drive.google.com/file/d/1BOwseNSpGRH3SuAYnepB1CKnnZ4yNe5P/view?usp=sharing" target="_blank">Walkthrough Video</a>
+[Walkthrough Video](com/file/d/1BOwseNSpGRH3SuAYnepB1CKnnZ4yNe5P/view?usp=sharing){:target="_blank"}
 
 <br>
 
