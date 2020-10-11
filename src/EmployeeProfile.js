@@ -48,7 +48,7 @@ class EmployeeProfile {
                 this.html += `<li class="list-group-item"><span class="font-weight-bold">Office Phone: </span>${this.officeNumber}</li>`;
                 break;
             case 'engineer':
-                this.html += `<li class="list-group-item"><span class="font-weight-bold">GitHub: </span><a href="https://github.com/${this.github}">${this.github}</a> </li>`;
+                this.html += `<li class="list-group-item"><span class="font-weight-bold">GitHub: </span><a href="https://github.com/${this.github}" target="_blank">${this.github}</a> </li>`;
                 break;
             case 'intern':
                 this.html += `<li class="list-group-item"><span class="font-weight-bold">School: </span>${this.school}</li > `;

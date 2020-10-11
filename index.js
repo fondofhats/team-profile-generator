@@ -27,13 +27,29 @@ class App {
             await inquirer.prompt([
                 {
                     type: "input",
-                    message: "ID: ",
-                    name: "id"
+                    message: "ID: (Required)",
+                    name: "id",
+                    validate: (id) => {
+                        if(id){
+                            return true;
+                        } else {
+                            console.log("Please enter and ID!");
+                            return false;
+                        }
+                    },
                 },
                 {
                     type: "input",
-                    message: "Name: ",
-                    name: "name"
+                    message: "Name: (Required)",
+                    name: "name",
+                    validate: (name) => {
+                        if(name){
+                            return true;
+                        } else {
+                            console.log("Please enter a name!");
+                            return false;
+                        }
+                    },
                 },
                 {
                     type: "input",
@@ -83,7 +99,15 @@ class App {
                     {
                         type: "input",
                         message: "Office Number: ",
-                        name: "officeNumber"
+                        name: "officeNumber",
+                        validate:(officeNumber) => {
+                            if(officeNumber){
+                                return true;
+                            } else {
+                                console.log("Please enter an office number!");
+                                return false;
+                            }
+                        },
                     }
                 ])
                 .then(({ officeNumber })=>{
@@ -100,7 +124,15 @@ class App {
                     {
                         type: "input",
                         message: "GitHub handle: ",
-                        name: "github"
+                        name: "github",
+                        validate:(github) =>{
+                            if(github){
+                                return true;
+                            } else {
+                                console.log("Please enter a github username!");
+                                return false;
+                            }
+                        },
                     }
                 ])
                 .then(({ github })=>{
@@ -117,7 +149,15 @@ class App {
                     {
                         type: "input",
                         message: "School: ",
-                        name: "school"
+                        name: "school",
+                        validate: (school)=>{
+                            if(school){
+                                return true;
+                            }else {
+                                console.log("Pleas enter a school!");
+                                return false;
+                            }
+                        },
                     }
                 ])
                 .then(({ school })=>{
@@ -142,13 +182,29 @@ class App {
                     },
                     {
                         type: "input",
-                        message: "ID: ",
-                        name: "id"
+                        message: "ID: (Required)",
+                        name: "id",
+                        validate: (id) => {
+                            if(id){
+                                return true;
+                            } else {
+                                console.log("Please enter and ID!");
+                                return false;
+                            }
+                        },
                     },
                     {
                         type: "input",
-                        message: "Name: ",
-                        name: "name"
+                        message: "Name: (Required)",
+                        name: "name",
+                        validate: (name) => {
+                            if(name){
+                                return true;
+                            } else {
+                                console.log("Please enter a name!");
+                                return false;
+                            }
+                        },
                     },
                     {
                         type: "input",
