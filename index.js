@@ -20,12 +20,15 @@ class App {
 
     async init(){
         let input = '';
+        const employee = this.createEmployee(await this.getEmployeeInfo());
+        console.table(employee);
+
 
     }
 
     /* Employee Info */
 
-    async getOfficeNumber(){
+    async getOfficeNumber(employeeInfo){
         const managerInfo = 
             await inquirer
                 .prompt([
@@ -34,11 +37,15 @@ class App {
                         message: "Office Number: ",
                         name: "officeNumber"
                     }
-                ]);
-        return await managerInfo.officeNubmer;
+                ])
+                .then(({ officeNumber })=>{
+                    employeeInfo.officeNumber = officeNumber;
+                });
+
+        return employeeInfo;
     }
 
-    async getGithubUser(){
+    async getGithubUser(employeeInfo){
         let engineerInfo =
             await inquirer
                 .prompt([
@@ -47,11 +54,15 @@ class App {
                         message: "GitHub handle: ",
                         name: "github"
                     }
-                ]);
-        return engineerInfo.github;
+                ])
+                .then(({ github })=>{
+                    employeeInfo.github = github;
+                });
+
+        return employeeInfo;
     }
 
-    async getSchoolInfo(){
+    async getSchoolInfo(employeeInfo){
         let internInfo =
             await inquirer
                 .prompt([
@@ -60,8 +71,12 @@ class App {
                         message: "School: ",
                         name: "school"
                     }
-                ]);
-        return internInfo.school;
+                ])
+                .then(({ school })=>{
+                    employeeInfo.school = school;
+                });
+
+        return employeeInfo;
     }
 
     async getEmployeeInfo(){
@@ -94,19 +109,44 @@ class App {
 
         switch(employeeInfo.title.toLowerCase()){
             case 'manager':
-                employeeInfo = await this.getOfficeNumber();
+                employeeInfo = await this.getOfficeNumber(employeeInfo);
                 break;
             case 'engineer':
-                employeeInfo = await this.getGithubUser();
+                employeeInfo = await this.getGithubUser(employeeInfo);
                 break;
             case 'intern':
-                employeeInfo = await this.getSchoolInfo();
+                employeeInfo = await this.getSchoolInfo(employeeInfo);
                 break;
             default:
                 break;
         }
-        console.log("employee Info: " + employeeInfo);
         return employeeInfo;
+    }
+
+    /* Create Employee Object */
+    createEmployee(employeeInfo) {
+        let employee;
+        const { id, name, email } = employeeInfo;
+        switch (employeeInfo.title.toLowerCase()) {
+            case 'manager': {
+                const manager = new Manager(name, id, email, employeeInfo.officeNumber);
+                employee = manager;
+                break;
+            }
+            case 'engineer': {
+                const engineer = new Engineer(name, id, email, employeeInfo.github);
+                employee = engineer;
+                break;
+            }
+            case 'intern': {
+                const intern = new Intern(name, id, email, employeeInfo.school);
+                employee = intern;
+                break;
+            }
+            default:
+                break;
+        }
+        return employee;
     }
 
 }
@@ -114,6 +154,6 @@ class App {
 module.exports= App;
 
 const app = new App();
-let empInfo = app.getEmployeeInfo();
+app.init();
 
 
