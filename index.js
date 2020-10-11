@@ -1,6 +1,7 @@
 const fs = require('fs');
 const http = require('http');
 const inquirer = require('inquirer');
+const Validator = require('email-validator');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
@@ -20,17 +21,49 @@ class App {
 
     async init(){
         let input = '';
+        console.log(`\nPlease enter the Managers information:\n`);
+
+        let myManagerInfo = 
+            await inquirer.prompt([
+                {
+                    type: "input",
+                    message: "ID: ",
+                    name: "id"
+                },
+                {
+                    type: "input",
+                    message: "Name: ",
+                    name: "name"
+                },
+                {
+                    type: "input",
+                    name: "email",
+                    message: "Email: ",
+                    validate: (email) => {
+                        if(Validator.validate(email)){
+                            return true;
+                        } else {
+                            console.log("Email must be in the propor format 'me@you.com'!");
+                            return false;
+                        }
+                    },
+                }
+            ]);
+            myManagerInfo.title = 'Manager';
+            myManagerInfo = await this.getOfficeNumber(myManagerInfo);
+            let managerEmp = this.createEmployee(myManagerInfo);
+            this.saveEmployeeToDb(managerEmp);
+
         do {
         const employee = this.createEmployee(await this.getEmployeeInfo());
         this.saveEmployeeToDb(employee);
-        console.table(employee);
         input =
             await inquirer
                 .prompt([
                     {
                         type: "confirm",
                         name: "exit",
-                        message: "Would you like to enter another employee?",
+                        message: "Would you like to enter another team member?",
                         default: false
                     }
                 ]);
@@ -38,14 +71,13 @@ class App {
         } while(input.exit);
 
         const teamRoster = this.createTeamRoster();
-        console.table(teamRoster);
-
+        this.createHTMLFile(teamRoster);
     }
 
     /* Employee Info */
 
     async getOfficeNumber(employeeInfo){
-        const managerInfo = 
+        let managerInfo = 
             await inquirer
                 .prompt([
                     {
@@ -96,11 +128,18 @@ class App {
     }
 
     async getEmployeeInfo(){
-        console.log(`\nPlease enter employee information:\n`);
+
+        console.log(`\nPlease inter new team member's information:\n`);
 
         let employeeInfo =
             await inquirer
                 .prompt([
+                    {
+                        type: "list",
+                        name: 'title',
+                        message: "Choose Role: ",
+                        choices: ['Engineer','Intern']
+                    },
                     {
                         type: "input",
                         message: "ID: ",
@@ -113,20 +152,20 @@ class App {
                     },
                     {
                         type: "input",
+                        name: "email",
                         message: "Email: ",
-                        name: "email"
-                    },
-                    {
-                        type: "input",
-                        message: "Title: ",
-                        name: "title"
+                        validate: (email) => {
+                            if(Validator.validate(email)){
+                                return true;
+                            } else {
+                                console.log("Email must be in the propor format 'me@you.com'!");
+                                return false;
+                            }
+                        },
                     }
                 ]);
 
         switch(employeeInfo.title.toLowerCase()){
-            case 'manager':
-                employeeInfo = await this.getOfficeNumber(employeeInfo);
-                break;
             case 'engineer':
                 employeeInfo = await this.getGithubUser(employeeInfo);
                 break;
@@ -217,6 +256,13 @@ class App {
         teamRoster = teamRoster.createTeamRoster();
 
         return teamRoster;
+    }
+
+    createHTMLFile(teamRoster){
+        fs.writeFile('./dist/index.html', teamRoster, function (err) {
+            if (err) throw err;
+            console.log('Saved!');
+        });
     }
 
 }

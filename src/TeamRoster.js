@@ -1,9 +1,8 @@
 class TeamRoster {
-    constructor(team) {
-        this.team = team;
+  constructor(team) {
+    this.team = team;
 
-        this.html =
-            `
+    this.html = `
         <!doctype html>
         <html lang="en">
         <head>
@@ -13,6 +12,9 @@ class TeamRoster {
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+            integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+
         <title>Meet The Team</title>
         <style>
         .employee-title {
@@ -24,9 +26,13 @@ class TeamRoster {
         </style>
         </head>
         <body>
+        <header>
+        <div class="p-3 mb-2 bg-danger text-white">
         <h1 class="text-center">Meet The Team</h1>
-        <div class="container">
-        <div id="root" class="row">
+    </div>
+    </header>
+    <div class="container">
+        <div id="root" class="row mt-5 justify-content-center">
         ${this.team}
         </div>
         </div>
@@ -42,12 +48,11 @@ class TeamRoster {
         </body>
         </html> 
         `;
-    }
+  }
 
-    createTeamRoster() {
-        return this.html;
-    }
+  createTeamRoster() {
+    return this.html;
+  }
 }
 
 module.exports = TeamRoster;
-
